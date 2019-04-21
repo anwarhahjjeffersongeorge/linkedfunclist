@@ -19,7 +19,7 @@ Exports a single class `LinkedFuncList`,  whose instances have the properties:
       * `null`, or
       * this (starting) `LinkedFuncList` instance.
 4. `traverse` that
-  a. is a unary `function` that accepts any `start` argument,
+  a. is a `function` that accepts any `start` argument and a `function`-valued `errorhandler` argument ,
   b. returns a `Promise` chain corresponding to the ordered unique set of calls to `func` properties of the `next` properties of the `LinkedFuncList`
     * the `function` values are called with their `this` values set to this `LinkedFuncList`
     * the starting function recieves the `start` argument
