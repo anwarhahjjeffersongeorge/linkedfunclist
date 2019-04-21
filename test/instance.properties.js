@@ -59,8 +59,10 @@ test('3|a [Symbol.iterator]', t => {
       : 'null'
     let tlists = [testlist, testlist2, testlist3, testlist4]
     let c = 1
-    for (let i in tlists) {
-      tlists[i].next = (i < tlists.length - 1) ? tlists[i + 1] : tlists[i].next
+    for (let i = 0; i < tlists.length; i++) {
+      tlists[i].next = (i < tlists.length - 1)
+        ? tlists[i + 1]
+        : tlists[i].next
       tlists[i].func = () => c++
     }
     // testlist.next = testlist2
@@ -80,7 +82,7 @@ test('4|a "traverse"', t => {
   let tlists = [testlist, testlist2, testlist3, testlist4]
   let c = 1
   let start = 'sss'
-  for (let i in tlists) {
+  for (let i = 0; i < tlists.length; i++) {
     tlists[i].next = (i < tlists.length - 1) ? tlists[i + 1] : tlists[i].next
     tlists[i].func = (aa) => {
       setTimeout(() => `${aa}${c++}`, 555)
