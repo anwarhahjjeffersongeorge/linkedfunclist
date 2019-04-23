@@ -2,8 +2,8 @@
   "name": "linkedfunclist",
   "version": "1.0.0",
   "description": "A linked list whose elements store functions.",
-  "main": "index.js",
-  "module": "main.js",
+  "main": "./src/index.js",
+  "module": "./src/main.js",
   "scripts": {
     "clean": "rm -rf .nyc_output/* coverage/* docs/*",
     "predoc": "rm -rf docs/*",
@@ -73,20 +73,21 @@
         "unexportedIdentifier": {"enable": false},
         "typeInference": {"enable": true},
         "brand": {
-          "logo": "./logo.png",
-          "title": "My Library",
-          "description": "this is awesome library",
+          "logo": "",
+          "title": "linkedfunclist",
+          "description": "A linked list whose elements store functions.",
           "repository": "https://github.com/foo/bar",
           "site": "http://my-library.org",
-          "author": "https://twitter.com/ahjgeorge",
+          "author": "https://github.com/anwarhahjjeffersongeorge",
           "image": "http://my-library.org/logo.png"
         },
         "manual": {
-          "index": "./manual/index.md",
+          "index": "./README.md",
           "globalIndex": true,
           "asset": "./manual/asset",
           "files": [
-            "./manual/overview.md"
+            "./manual/specification.md",
+            "./manual/usage.md"
           ]
         },
         "test": {
