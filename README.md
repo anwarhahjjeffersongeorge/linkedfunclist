@@ -1,26 +1,25 @@
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 # linkedfunclist
 
-Exports a single class `LinkedFuncList`,  whose instances have the properties:
-1. `next` that
-  a. is `null` by default
-  b. can only have a value of
-    - `null`, or
-    - an instance of `LinkedFuncList`, self-inclusive
-2. `func` that
-  a. is `null` by default
-  b. can only have a value of
-    - `null`, or
-    - an `object` of type `function`
-3. `[Symbol.iterator]` that
-  a. returns a generator function  that produces the ordered unique set of `next` properties
-    - starting with this `LinkedFuncList` instance,
-    - continuing with all `LinkedFuncList` instances linked via `next`, and
-    - terminating before any `next` whose value is
-      * `null`, or
-      * this (starting) `LinkedFuncList` instance.
-4. `traverse` that
-  a. is a `function` that accepts any `start` argument and a `function`-valued `errorhandler` argument ,
-  b. returns a `Promise` chain corresponding to the ordered unique set of calls to `func` properties of the `next` properties of the `LinkedFuncList`
-    * the `function` values are called with their `this` values set to this `LinkedFuncList`
-    * the starting function recieves the `start` argument
-    * each function in the `Promise` chain recieves the result of the previous function in the chain
+LinkedFuncList
+A linked list whose elements store functions.
+
+## Installation
+
+    npm install linkedfunclist
+
+## Documentation
+
+Please see **./docs/index.html**
+
+## Contributing
+1. Specification (see **./docs/specification.md**) must be updated to include new functionality.
+2. All tests must pass and be written such that they clearly reference the area of the specification they satisfy.
+3. Code must adhere to [JavaScript Standard Style](https://standardjs.com).
+
+## License
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+## Author
+[Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)
