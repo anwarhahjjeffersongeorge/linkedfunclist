@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Manual | linkedfunclist</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A linked list whose elements store functions."><meta property="og:type" content="website"><meta property="og:url" content="http://my-library.org"><meta property="og:site_name" content="linkedfunclist"><meta property="og:title" content="linkedfunclist"><meta property="og:image" content="http://my-library.org/logo.png"><meta property="og:description" content="A linked list whose elements store functions."><meta property="og:author" content="https://github.com/anwarhahjjeffersongeorge"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="linkedfunclist"><meta property="twitter:description" content="A linked list whose elements store functions."><meta property="twitter:image" content="http://my-library.org/logo.png"></head>
+<body class="layout-container manual-root manual-index" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/foo/bar"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/specification.html"><a href="manual/specification.html" data-ice="link">Specification</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/specification.html"><a href="manual/specification.html#instance-properties-" data-ice="link">Instance Properties:</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#1---code-next--code-" data-ice="link">1. next</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#2---code-func--code-" data-ice="link">2. func</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#3---code--symbol-iterator---code-" data-ice="link">3. [Symbol.iterator]</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#4---code-chaincall--code-" data-ice="link">4. chainCall</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#5---code-callall--code-" data-ice="link">5. callAll</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#6---code-link--code-" data-ice="link">6. link</a></li>
+</ul>
+  </div>
+<div data-ice="manual">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/usage.html"><a href="manual/usage.html" data-ice="link">Usage</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-user-index" data-ice="manualUserIndex"><p><img src="https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg" alt="Version"> <a href="https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist"><img src="https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist"><img src="https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href><img src="https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg" alt="license"></a>
+<a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-blue.svg" alt="JavaScript Style Guide"></a></p>
+<h1 id="linkedfunclist">linkedfunclist</h1><p>Yet another linked list whose elements store functions.</p>
+<h2 id="installation">Installation</h2><pre><code><code class="source-code prettyprint">npm install linkedfunclist</code>
+</code></pre><h2 id="documentation">Documentation</h2><p>Please see <strong>./docs/index.html</strong></p>
+<h2 id="contributing-guidelines">Contributing Guidelines</h2><ol>
+<li>Specification outline (see <strong>./docs/specification.md</strong>) must be updated to include new functionality.</li>
+<li>All tests must pass and have descriptive tags that make it easy to tell which areas of the specification  they satisfy <em>e.g.</em> <code>4.e.A</code>.</li>
+<li>Code must adhere to <a href="https://standardjs.com">JavaScript Standard Style</a>.</li>
+<li>New code must include ESDoc documentation.</li>
+<li>Build must pass <a href="https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist">TravisCI</a>.</li>
+</ol>
+<p>Thanks.</p>
+<h2 id="license">License</h2><p><a href="https://unlicense.org/">Unlicense</a></p>
+<h2 id="author">Author</h2><p><a href="https://github.com/anwarhahjjeffersongeorge">Anwar Hahj Jefferson-George</a></p>
+</div>
+
+  
+
+  <div class="manual-cards">
+    
+  <div class="manual-card-wrap" data-ice="cards">
+      <div class="manual-card">
+        <div data-ice="card"><h1>Specification</h1><p>This module exports a single class, <code>LinkedFuncList</code>.</p><h2>Instance Properties:</h2><h3>1. <code>next</code></h3><ul>
+<li>a. is <code>null</code> by default</li>
+<li>b. can only have a value of<ul>
+<li><code>null</code>, or</li>
+<li>an instance of <code>LinkedFuncList</code>, self-inclusive</li>
+</ul>
+</li>
+</ul><h3>2. <code>func</code></h3><ul>
+<li>a. is <code>null</code> by default</li>
+<li>b. can only have a value of<ul>
+<li><code>null</code>, or</li>
+<li>an <code>object</code> of type <code>function</code></li>
+</ul>
+</li>
+</ul><h3>3. <code>[Symbol.iterator]</code></h3><ul>
+<li>a. returns a <code>generator function</code>  that produces the ordered unique set of <code>next</code> properties<ul>
+<li>A. starting with this <code>LinkedFuncList</code> instance,</li>
+<li>B. continuing with all <code>LinkedFuncList</code> instances linked via <code>next</code>, and</li>
+<li>C. terminating before any <code>next</code> whose value is<ul>
+<li>i. <code>null</code>, or</li>
+<li>j.  this (starting) <code>LinkedFuncList</code> instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h3>4. <code>chainCall</code></h3><ul>
+<li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument,</li>
+<li>b. returns a <code>Promise</code> corresponding to the ordered set of <em>chained</em> calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>
+<li>A. the starting function recieves the <code>start</code> argument</li>
+<li>B. each function called in the <code>Promise</code> recieves the result of the previous function in the chain</li>
+<li>C. the functions are called with their <code>this</code> values set to this <code>LinkedFuncList</code> instance (the initiator of the traversal</li>
+<li>D. errors thrown in the functions cause the <code>Promise</code> to reject</li>
+<li>E. the order of the calls to the functions corresponds to the order of iteration produced by <code>this[Symbol.iterator]</code> even if the functions are asynchronous</li>
+<li>F. any <code>func</code> properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it</li>
+</ul>
+</li>
+</ul><h3>5. <code>callAll</code></h3><ul>
+<li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument,</li>
+<li>b. returns a <code>Promise</code> corresponding to the ordered set of <em>simultaneous</em> calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>
+<li>A. all functions recieve the <code>start</code> argument</li>
+<li>B. the functions are called with their <code>this</code> values set to this <code>LinkedFuncList</code> instance (the initiator of the traversal</li>
+<li>C. errors thrown in the functions cause the <code>Promise</code> to reject</li>
+<li>D. any <code>func</code> properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it</li>
+</ul>
+</li>
+</ul><h3>6. <code>link</code></h3><ul>
+<li>a. is a <code>function</code> that accepts any number of arguments</li>
+<li>b. substitutes passthrough functions for arguments that are not<ul>
+<li><code>function</code> objects, or</li>
+<li><code>LinkedFuncList</code> instances</li>
+</ul>
+</li>
+<li>c. creates a chained list of <code>LinkedFuncList</code> instances where<ul>
+<li>A. the first element in the chain is this instance (the caller)</li>
+<li>B. the order of the elements in the chain correspond to the order of arguments supplied to the <code>link</code> function</li>
+<li>C. <code>function</code>-valued arguments are replaced with new <code>LinkedFuncList</code> instances whose <code>func</code> properties correspond to the argument being replaced</li>
+</ul>
+</li>
+</ul></div>
+        <a data-ice="link" href="manual/specification.html"></a>
+      </div>
+    </div>
+<div class="manual-card-wrap" data-ice="cards">
+      <div class="manual-card">
+        <div data-ice="card"><h1>Usage</h1><pre><code><code class="source-code prettyprint">import { LinkedFuncList } from &apos;linkedfunclist&apos;</code>
+</code></pre></div>
+        <a data-ice="link" href="manual/usage.html"></a>
+      </div>
+    </div>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

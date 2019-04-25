@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/main.js | linkedfunclist</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A linked list whose elements store functions."><meta property="og:type" content="website"><meta property="og:url" content="http://my-library.org"><meta property="og:site_name" content="linkedfunclist"><meta property="og:title" content="linkedfunclist"><meta property="og:image" content="http://my-library.org/logo.png"><meta property="og:description" content="A linked list whose elements store functions."><meta property="og:author" content="https://github.com/anwarhahjjeffersongeorge"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="linkedfunclist"><meta property="twitter:description" content="A linked list whose elements store functions."><meta property="twitter:image" content="http://my-library.org/logo.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/foo/bar"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/main.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// ESM syntax is supported.
+/**
+ * LinkedFuncList
+ * A class of linked lists that contain function data.
+ */
+class LinkedFuncList {
+  constructor () {
+    /** @ignore */
+    this._func = null
+    /** @ignore */
+    this._next = null
+  }
+
+  /** @type {null|LinkedFuncList} The next node in the list. */
+  get next () {
+    return this._next
+  }
+
+  /** @type {null|LinkedFuncList} */
+  set next (n) {
+    this._next = ((n === null) || (n instanceof LinkedFuncList))
+      ? n
+      : this._next
+  }
+
+  /** @type {null|function} The function data for this list node.  */
+  get func () {
+    return this._func
+  }
+
+  /** @type {null|function} */
+  set func (f) {
+    this._func = ((f === null) || (typeof f === &apos;function&apos;))
+      ? f
+      : this._func
+  }
+
+  /** @type {generator} */
+  get [Symbol.iterator] () {
+    return function * (startingthis = this) {
+      yield this
+      if ((this.next instanceof LinkedFuncList) &amp;&amp; (this.next !== startingthis)) {
+        yield * this.next[Symbol.iterator](startingthis)
+      }
+    }
+  }
+
+  /**
+   * async chainCall
+   * returns a Promise corresponding to the ordered unique set of calls to func properties of the `next` properties of the LinkedFuncList
+   *
+   * @param {object} [start] - any starting payload
+   * @return {Promise}
+   */
+  async chainCall (start) {
+    const iterator = this[Symbol.iterator]()
+    let promise = new Promise(async (resolve, reject) =&gt; {
+      let loop = {
+        i: 0,
+        payload: start
+      }
+      for (let list of iterator) {
+        const func = (typeof list.func === &apos;function&apos;)
+          ? list.func
+          : m =&gt; m
+        try {
+          // console.log(&apos;oo o&apos;, loop.payload)
+          loop.payload = await func.call(this, loop.payload)
+          // console.log(&apos;oooo&apos;, loop.payload)
+        } catch (e) {
+          reject(e)
+        } finally {
+          loop.i++
+        }
+      }
+      resolve(loop.payload)
+    })
+    return promise
+  }
+
+  /**
+   * async callAll
+   * returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList
+   *
+   * @param {object} [start] - any starting payload
+   * @return {Promise}
+   */
+  async callAll (start) {
+    const iterator = [...this].map(async ({ func }) =&gt; {
+      func = (typeof func === &apos;function&apos;)
+        ? func
+        : m =&gt; m
+      return new Promise(async (resolve, reject) =&gt; {
+        try {
+          // console.log(&apos;oo o&apos;, loop.payload)
+          let result = await func.call(this, start)
+          // console.log(&apos;oooo&apos;, loop.payload)
+          resolve(result)
+        } catch (e) {
+          reject(e)
+        }
+      })
+    })
+    let promise = Promise.all(iterator)
+    return promise
+  }
+
+  /**
+   * link
+   * creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called
+   *
+   * @param {(function|LinkedFuncList|object)} [linkees] - the LinkedFuncList instances to link up or the functions and objects to use to create new instances
+   * @return {Promise}
+   */
+  link (...linkees) {
+    if (linkees.length &gt; 0) {
+      let current = this
+      linkees.forEach((linkee, i) =&gt; {
+        if (!(linkee instanceof LinkedFuncList)) {
+          if (typeof linkee === &apos;function&apos;) {
+            const f = linkee
+            linkee = new LinkedFuncList()
+            linkee.func = f
+          } else {
+            const s = linkee
+            linkee = new LinkedFuncList()
+            linkee.func = () =&gt; s
+          }
+        }
+        current.next = linkee
+        current = linkee
+      })
+    }
+  }
+}
+
+export { LinkedFuncList }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
