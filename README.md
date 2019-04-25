@@ -24,7 +24,7 @@ Please see **./docs/index.html**
 Thank you.
 
 ## License
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+[Unlicense](https://unlicense.org/)
 
 ## Author
 [Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)
