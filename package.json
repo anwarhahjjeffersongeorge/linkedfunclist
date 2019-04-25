@@ -97,10 +97,10 @@
             "logo": "",
             "title": "linkedfunclist",
             "description": "A linked list whose elements store functions.",
-            "repository": "https://github.com/foo/bar",
-            "site": "http://my-library.org",
+            "repository": "https://github.com/anwarhahjjeffersongeorge/linkedfunclist",
+            "site": "https://anwarhahjjeffersongeorge.github.io/linkedfunclist/",
             "author": "https://github.com/anwarhahjjeffersongeorge",
-            "image": "http://my-library.org/logo.png"
+            "image": ""
           },
           "manual": {
             "index": "./README.md",
