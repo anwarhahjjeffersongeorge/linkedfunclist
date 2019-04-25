@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 # linkedfunclist
