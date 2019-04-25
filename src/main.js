@@ -5,11 +5,13 @@
  */
 class LinkedFuncList {
   constructor () {
+    /** @ignore */
     this._func = null
+    /** @ignore */
     this._next = null
   }
 
-  /** @type {null|LinkedFuncList} */
+  /** @type {null|LinkedFuncList} The next node in the list. */
   get next () {
     return this._next
   }
@@ -21,7 +23,7 @@ class LinkedFuncList {
       : this._next
   }
 
-  /** @type {null|function} */
+  /** @type {null|function} The function data for this list node.  */
   get func () {
     return this._func
   }
@@ -33,7 +35,7 @@ class LinkedFuncList {
       : this._func
   }
 
-  /** @type {function*} */
+  /** @type {generator} */
   get [Symbol.iterator] () {
     return function * (startingthis = this) {
       yield this
@@ -45,9 +47,9 @@ class LinkedFuncList {
 
   /**
    * async chainCall
-   * returns a Promise corresponding to the ordered unique set of calls to `func` properties of the `next` properties of the `LinkedFuncList`
+   * returns a Promise corresponding to the ordered unique set of calls to func properties of the `next` properties of the LinkedFuncList
    *
-   * @param {type} [start] - any starting payload
+   * @param {object} [start] - any starting payload
    * @return {Promise}
    */
   async chainCall (start) {
@@ -78,9 +80,9 @@ class LinkedFuncList {
 
   /**
    * async callAll
-   * returns a Promise corresponding to the ordered unique set of simultaneous calls to `func` properties of the `next` properties of the `LinkedFuncList`
+   * returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList
    *
-   * @param {type} [start] - any starting payload
+   * @param {object} [start] - any starting payload
    * @return {Promise}
    */
   async callAll (start) {
@@ -105,9 +107,9 @@ class LinkedFuncList {
 
   /**
    * link
-   * creates a chained list of `LinkedFuncList` instances attached to this instance, creating new `LinkedFuncList` to replace any arguments that are not already `LinkedFuncList` instances, and setting the `func` property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called
+   * creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called
    *
-   * @param {...} [linkees] - any starting payload
+   * @param {(function|LinkedFuncList|object)} [linkees] - the LinkedFuncList instances to link up or the functions and objects to use to create new instances
    * @return {Promise}
    */
   link (...linkees) {
