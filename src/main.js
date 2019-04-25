@@ -4,6 +4,9 @@
  * A class of linked lists that contain function data.
  */
 class LinkedFuncList {
+  /**
+   * Create a new LinkedFuncList instance.
+   */
   constructor () {
     /** @ignore */
     this._func = null
