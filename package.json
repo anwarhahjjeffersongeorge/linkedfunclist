@@ -8,14 +8,15 @@
     "clean": "rm -rf .nyc_output/* coverage/* docs/*",
     "predoc": "rm -rf docs/*",
     "doc": "esdoc",
-    "pretestr": "clear && standard --fix \"index.js\" \"main.js\"",
-    "testr": "cross-env NODE_ENV=test nyc --require @babel/register --reporter=text --reporter=html ava",
-    "pretest": "clear",
-    "test": "ava --watch"
+    "pretest": "clear && standard --fix \"index.js\" \"main.js\"",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcovt --reporter=html ava",
+    "pretestw": "clear",
+    "testw": "ava --watch",
+    "coverage": "codecov"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "github:anwarhahjjeffersongeorge/linkedfunclist"
   },
   "keywords": [
     "linked",
@@ -29,9 +30,8 @@
     "esm": "^3.2.22"
   },
   "devDependencies": {
-    "@babel/register": "^7.4.0",
     "ava": "^1.4.1",
-    "babel-plugin-istanbul": "^5.1.2",
+    "codecov": "^3.3.0",
     "cross-env": "^5.2.0",
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
@@ -60,44 +60,76 @@
   "esdoc": {
     "source": "./src",
     "destination": "./docs",
-    "includes": ["\\.js$"],
-    "excludes": ["\\.config\\.js$"],
+    "includes": [
+      "\\.js$"
+    ],
+    "excludes": [
+      "\\.config\\.js$"
+    ],
     "plugins": [
-    {
-      "name": "esdoc-standard-plugin",
-      "option": {
-        "lint": {"enable": true},
-        "coverage": {"enable": true},
-        "accessor": {"access": ["public", "protected", "private"], "autoPrivate": true},
-        "undocumentIdentifier": {"enable": true},
-        "unexportedIdentifier": {"enable": false},
-        "typeInference": {"enable": true},
-        "brand": {
-          "logo": "",
-          "title": "linkedfunclist",
-          "description": "A linked list whose elements store functions.",
-          "repository": "https://github.com/foo/bar",
-          "site": "http://my-library.org",
-          "author": "https://github.com/anwarhahjjeffersongeorge",
-          "image": "http://my-library.org/logo.png"
-        },
-        "manual": {
-          "index": "./README.md",
-          "globalIndex": true,
-          "asset": "./manual/asset",
-          "files": [
-            "./manual/specification.md",
-            "./manual/usage.md"
-          ]
-        },
-        "test": {
-          "source": "./test/",
-          "interfaces": ["describe", "it", "context", "suite", "test"],
-          "includes": ["(spec|Spec|test|Test)\\.js$"],
-          "excludes": ["\\.config\\.js$"]
+      {
+        "name": "esdoc-standard-plugin",
+        "option": {
+          "lint": {
+            "enable": true
+          },
+          "coverage": {
+            "enable": true
+          },
+          "accessor": {
+            "access": [
+              "public",
+              "protected",
+              "private"
+            ],
+            "autoPrivate": true
+          },
+          "undocumentIdentifier": {
+            "enable": true
+          },
+          "unexportedIdentifier": {
+            "enable": false
+          },
+          "typeInference": {
+            "enable": true
+          },
+          "brand": {
+            "logo": "",
+            "title": "linkedfunclist",
+            "description": "A linked list whose elements store functions.",
+            "repository": "https://github.com/foo/bar",
+            "site": "http://my-library.org",
+            "author": "https://github.com/anwarhahjjeffersongeorge",
+            "image": "http://my-library.org/logo.png"
+          },
+          "manual": {
+            "index": "./README.md",
+            "globalIndex": true,
+            "asset": "./manual/asset",
+            "files": [
+              "./manual/specification.md",
+              "./manual/usage.md"
+            ]
+          },
+          "test": {
+            "source": "./test/",
+            "interfaces": [
+              "describe",
+              "it",
+              "context",
+              "suite",
+              "test"
+            ],
+            "includes": [
+              "(spec|Spec|test|Test)\\.js$"
+            ],
+            "excludes": [
+              "\\.config\\.js$"
+            ]
+          }
         }
       }
-    }]
+    ]
   },
   "nyc": {
     "exclude": [
@@ -105,8 +137,11 @@
       "node_modules/**",
       "test/**"
     ],
-    "sourceMap": false,
-    "instrument": false,
+    "include": [
+      "src/**/*.js"
+    ],
+    "sourceMap": true,
+    "instrument": true,
     "reporter": "html"
   }
 }
