@@ -9,7 +9,7 @@
     "predoc": "rm -rf docs/*",
     "doc": "esdoc",
     "pretest": "clear && standard --fix \"index.js\" \"main.js\"",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcovt --reporter=html ava",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=html ava",
     "pretestw": "clear",
     "testw": "ava --watch",
     "coverage": "codecov"
