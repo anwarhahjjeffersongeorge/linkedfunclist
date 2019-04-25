@@ -3,7 +3,9 @@ node_js:
   - 11
   - 10
 cache: npm
-after_success: npm run coverage
+after_success:
+  - npm run coverage
+  - npm run doc
 deploy:
   local_dir: ./docs
   provider: pages
