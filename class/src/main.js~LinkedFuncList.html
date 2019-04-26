@@ -35,13 +35,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {LinkedFuncList} from &apos;<span><a href="file/src/main.js.html#lineNumber6">linkedfunclist/src/main.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {LinkedFuncList} from &apos;<span><a href="file/src/main.js.html#lineNumber5">linkedfunclist/src/main.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/main.js.html#lineNumber6">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/main.js.html#lineNumber5">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -61,8 +61,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>LinkedFuncList
-A class of linked lists that contain function data.</p>
+  <div class="description" data-ice="description"><p>A class of linked lists that contain function data.</p>
 </div>
   
 
@@ -131,7 +130,7 @@ A class of linked lists that contain function data.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/main.js~LinkedFuncList.html#instance-get-[Symbol.iterator]">[Symbol.iterator]</a></span></span><span class="code" data-ice="signature">: <span>generator</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/main.js~LinkedFuncList.html#instance-get-[Symbol.iterator]">[Symbol.iterator]</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction">GeneratorFunction</a></span></span>
         </p>
       </div>
       <div>
@@ -284,8 +283,7 @@ A class of linked lists that contain function data.</p>
       <div>
         
         
-        <div data-ice="description"><p>async callAll
-returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList</p>
+        <div data-ice="description"><p>call all of the list&apos;s functions with start value.</p>
 </div>
       </div>
     </td>
@@ -314,8 +312,8 @@ returns a Promise corresponding to the ordered unique set of simultaneous calls 
       <div>
         
         
-        <div data-ice="description"><p>async chainCall
-returns a Promise corresponding to the ordered unique set of calls to func properties of the <code>next</code> properties of the LinkedFuncList</p>
+        <div data-ice="description"><p>call this list&apos;s functions mutating a start value
+through nodes&apos; functions until done.</p>
 </div>
       </div>
     </td>
@@ -338,14 +336,13 @@ returns a Promise corresponding to the ordered unique set of calls to func prope
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/main.js~LinkedFuncList.html#instance-method-link">link</a></span></span><span class="code" data-ice="signature">(linkees: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/main.js~LinkedFuncList.html#instance-method-link">link</a></span></span><span class="code" data-ice="signature">(links: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>link
-creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called</p>
+        <div data-ice="description"><p>adds some links to this list</p>
 </div>
       </div>
     </td>
@@ -376,7 +373,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber9">source</a></span></span>
     </span>
   </h3>
 
@@ -419,11 +416,11 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     
     
     
-    <span class="code" data-ice="name">[Symbol.iterator]</span><span class="code" data-ice="signature">: <span>generator</span></span>
+    <span class="code" data-ice="name">[Symbol.iterator]</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction">GeneratorFunction</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -466,7 +463,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber29">source</a></span></span>
     </span>
   </h3>
 
@@ -509,7 +506,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -552,7 +549,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber17">source</a></span></span>
     </span>
   </h3>
 
@@ -595,7 +592,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -641,15 +638,14 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber91">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>async callAll
-returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList</p>
+  <div data-ice="description"><p>call all of the list&apos;s functions with start value.</p>
 </div>
 
   
@@ -666,7 +662,7 @@ returns a Promise corresponding to the ordered unique set of simultaneous calls 
       <td data-ice="name" class="code" data-depth="0">start</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>any starting payload</p>
+      <td data-ice="description"><p>any start value</p>
 </td>
     </tr>
 </tbody>
@@ -680,7 +676,8 @@ returns a Promise corresponding to the ordered unique set of simultaneous calls 
       <tbody>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
-          
+          <td class="return-desc" data-ice="returnDescription"><p>resolves to Array or Error</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -715,15 +712,15 @@ returns a Promise corresponding to the ordered unique set of simultaneous calls 
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber57">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>async chainCall
-returns a Promise corresponding to the ordered unique set of calls to func properties of the <code>next</code> properties of the LinkedFuncList</p>
+  <div data-ice="description"><p>call this list&apos;s functions mutating a start value
+through nodes&apos; functions until done.</p>
 </div>
 
   
@@ -740,7 +737,7 @@ returns a Promise corresponding to the ordered unique set of calls to func prope
       <td data-ice="name" class="code" data-depth="0">start</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>any starting payload</p>
+      <td data-ice="description"><p>any start value</p>
 </td>
     </tr>
 </tbody>
@@ -754,7 +751,8 @@ returns a Promise corresponding to the ordered unique set of calls to func prope
       <tbody>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
-          
+          <td class="return-desc" data-ice="returnDescription"><p>resolves to single value or Error</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -785,19 +783,24 @@ returns a Promise corresponding to the ordered unique set of calls to func prope
     
     
     
-    <span class="code" data-ice="name">link</span><span class="code" data-ice="signature">(linkees: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></span>
+    <span class="code" data-ice="name">link</span><span class="code" data-ice="signature">(links: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber118">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/main.js.html#lineNumber117">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>link
-creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called</p>
+  <div data-ice="description"><p>adds some links to this list</p>
+<p>parses each link:</p>
+<ul>
+<li>if link isnt already a LinkedFuncList instance, make a new one.</li>
+<li>if link is a function, the new instance contains that function.</li>
+<li>if link isn&apos;t a function, the new instance contains a function that returns link.</li>
+</ul>
 </div>
 
   
@@ -811,10 +814,10 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">linkees</td>
+      <td data-ice="name" class="code" data-depth="0">links</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span> | <span><a href="class/src/main.js~LinkedFuncList.html">LinkedFuncList</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"><ul><li>optional</li></ul></td>
-      <td data-ice="description"><p>the LinkedFuncList instances to link up or the functions and objects to use to create new instances</p>
+      <td data-ice="description"><p>the links to add</p>
 </td>
     </tr>
 </tbody>
@@ -822,19 +825,7 @@ creates a chained list of LinkedFuncList instances attached to this instance, cr
 </div>
 </div>
 
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
+  
 
   
 

@@ -578,7 +578,7 @@
     "__docId__": 49,
     "kind": "file",
     "name": "src/main.js",
-    "content": "// ESM syntax is supported.\n/**\n * LinkedFuncList\n * A class of linked lists that contain function data.\n */\nclass LinkedFuncList {\n  /**\n   * Create a new LinkedFuncList instance.\n   */\n  constructor () {\n    /** @ignore */\n    this._func = null\n    /** @ignore */\n    this._next = null\n  }\n\n  /** @type {null|LinkedFuncList} The next node in the list. */\n  get next () {\n    return this._next\n  }\n\n  /** @type {null|LinkedFuncList} */\n  set next (n) {\n    this._next = ((n === null) || (n instanceof LinkedFuncList))\n      ? n\n      : this._next\n  }\n\n  /** @type {null|function} The function data for this list node.  */\n  get func () {\n    return this._func\n  }\n\n  /** @type {null|function} */\n  set func (f) {\n    this._func = ((f === null) || (typeof f === 'function'))\n      ? f\n      : this._func\n  }\n\n  /** @type {generator} */\n  get [Symbol.iterator] () {\n    return function * (startingthis = this) {\n      yield this\n      if ((this.next instanceof LinkedFuncList) && (this.next !== startingthis)) {\n        yield * this.next[Symbol.iterator](startingthis)\n      }\n    }\n  }\n\n  /**\n   * async chainCall\n   * returns a Promise corresponding to the ordered unique set of calls to func properties of the `next` properties of the LinkedFuncList\n   *\n   * @param {object} [start] - any starting payload\n   * @return {Promise}\n   */\n  async chainCall (start) {\n    const iterator = this[Symbol.iterator]()\n    let promise = new Promise(async (resolve, reject) => {\n      let loop = {\n        i: 0,\n        payload: start\n      }\n      for (let list of iterator) {\n        const func = (typeof list.func === 'function')\n          ? list.func\n          : m => m\n        try {\n          // console.log('oo o', loop.payload)\n          loop.payload = await func.call(this, loop.payload)\n          // console.log('oooo', loop.payload)\n        } catch (e) {\n          reject(e)\n        } finally {\n          loop.i++\n        }\n      }\n      resolve(loop.payload)\n    })\n    return promise\n  }\n\n  /**\n   * async callAll\n   * returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList\n   *\n   * @param {object} [start] - any starting payload\n   * @return {Promise}\n   */\n  async callAll (start) {\n    const iterator = [...this].map(async ({ func }) => {\n      func = (typeof func === 'function')\n        ? func\n        : m => m\n      return new Promise(async (resolve, reject) => {\n        try {\n          // console.log('oo o', loop.payload)\n          let result = await func.call(this, start)\n          // console.log('oooo', loop.payload)\n          resolve(result)\n        } catch (e) {\n          reject(e)\n        }\n      })\n    })\n    let promise = Promise.all(iterator)\n    return promise\n  }\n\n  /**\n   * link\n   * creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called\n   *\n   * @param {(function|LinkedFuncList|object)} [linkees] - the LinkedFuncList instances to link up or the functions and objects to use to create new instances\n   * @return {Promise}\n   */\n  link (...linkees) {\n    if (linkees.length > 0) {\n      let current = this\n      linkees.forEach((linkee, i) => {\n        if (!(linkee instanceof LinkedFuncList)) {\n          if (typeof linkee === 'function') {\n            const f = linkee\n            linkee = new LinkedFuncList()\n            linkee.func = f\n          } else {\n            const s = linkee\n            linkee = new LinkedFuncList()\n            linkee.func = () => s\n          }\n        }\n        current.next = linkee\n        current = linkee\n      })\n    }\n  }\n}\n\nexport { LinkedFuncList }\n",
+    "content": "// ESM syntax is supported.\n/**\n * A class of linked lists that contain function data.\n */\nclass LinkedFuncList {\n  /**\n   * Create a new LinkedFuncList instance.\n   */\n  constructor () {\n    /** @ignore */\n    this._func = null\n    /** @ignore */\n    this._next = null\n  }\n\n  /** @type {null|LinkedFuncList} The next node in the list. */\n  get next () {\n    return this._next\n  }\n\n  /** @type {null|LinkedFuncList} */\n  set next (n) {\n    this._next = ((n === null) || (n instanceof LinkedFuncList))\n      ? n\n      : this._next\n  }\n\n  /** @type {null|function} The function data for this list node.  */\n  get func () {\n    return this._func\n  }\n\n  /** @type {null|function} */\n  set func (f) {\n    this._func = ((f === null) || (typeof f === 'function'))\n      ? f\n      : this._func\n  }\n\n  /** @type {GeneratorFunction} */\n  get [Symbol.iterator] () {\n    return function * (startingthis = this) {\n      yield this\n      if ((this.next instanceof LinkedFuncList) && (this.next !== startingthis)) {\n        yield * this.next[Symbol.iterator](startingthis)\n      }\n    }\n  }\n\n  /**\n   * call this list's functions mutating a start value\n   * through nodes' functions until done.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to single value or Error\n   */\n  async chainCall (start) {\n    const iterator = this[Symbol.iterator]()\n    let promise = new Promise(async (resolve, reject) => {\n      let loop = {\n        i: 0,\n        payload: start\n      }\n      for (let list of iterator) {\n        const func = (typeof list.func === 'function')\n          ? list.func\n          : m => m\n        try {\n          // console.log('oo o', loop.payload)\n          loop.payload = await func.call(this, loop.payload)\n          // console.log('oooo', loop.payload)\n        } catch (e) {\n          reject(e)\n        } finally {\n          loop.i++\n        }\n      }\n      resolve(loop.payload)\n    })\n    return promise\n  }\n\n  /** call all of the list's functions with start value.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to Array or Error\n   */\n  async callAll (start) {\n    const iterator = [...this].map(async ({ func }) => {\n      func = (typeof func === 'function')\n        ? func\n        : m => m\n      return new Promise(async (resolve, reject) => {\n        try {\n          // console.log('oo o', loop.payload)\n          let result = await func.call(this, start)\n          // console.log('oooo', loop.payload)\n          resolve(result)\n        } catch (e) {\n          reject(e)\n        }\n      })\n    })\n    let promise = Promise.all(iterator)\n    return promise\n  }\n\n  /** adds some links to this list\n   *\n   * parses each link:\n   * - if link isnt already a LinkedFuncList instance, make a new one.\n   * - if link is a function, the new instance contains that function.\n   * - if link isn't a function, the new instance contains a function that returns link.\n   *\n   * @param {(function|LinkedFuncList|object)} [links] - the links to add\n   */\n  link (...links) {\n    if (links.length > 0) {\n      let current = this\n      links.forEach((link, i) => {\n        if (!(link instanceof LinkedFuncList)) {\n          if (typeof link === 'function') {\n            const f = link\n            link = new LinkedFuncList()\n            link.func = f\n          } else {\n            const s = link\n            link = new LinkedFuncList()\n            link.func = () => s\n          }\n        }\n        current.next = link\n        current = link\n      })\n    }\n  }\n}\n\nexport { LinkedFuncList }\n",
     "static": true,
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/src/main.js",
     "access": "public",
@@ -596,8 +596,8 @@
     "export": true,
     "importPath": "linkedfunclist/src/main.js",
     "importStyle": "{LinkedFuncList}",
-    "description": "LinkedFuncList\nA class of linked lists that contain function data.",
-    "lineNumber": 6,
+    "description": "A class of linked lists that contain function data.",
+    "lineNumber": 5,
     "interface": false
   },
   {
@@ -611,7 +611,7 @@
     "longname": "src/main.js~LinkedFuncList#constructor",
     "access": "public",
     "description": "Create a new LinkedFuncList instance.",
-    "lineNumber": 10
+    "lineNumber": 9
   },
   {
     "__docId__": 52,
@@ -622,7 +622,7 @@
     "longname": "src/main.js~LinkedFuncList#_func",
     "access": "private",
     "description": null,
-    "lineNumber": 12,
+    "lineNumber": 11,
     "ignore": true,
     "type": {
       "types": [
@@ -639,7 +639,7 @@
     "longname": "src/main.js~LinkedFuncList#_next",
     "access": "private",
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 13,
     "ignore": true,
     "type": {
       "types": [
@@ -658,7 +658,7 @@
     "longname": "src/main.js~LinkedFuncList#next",
     "access": "public",
     "description": null,
-    "lineNumber": 18,
+    "lineNumber": 17,
     "type": {
       "nullable": null,
       "types": [
@@ -680,7 +680,7 @@
     "longname": "src/main.js~LinkedFuncList#next",
     "access": "public",
     "description": null,
-    "lineNumber": 23,
+    "lineNumber": 22,
     "type": {
       "nullable": null,
       "types": [
@@ -702,7 +702,7 @@
     "longname": "src/main.js~LinkedFuncList#func",
     "access": "public",
     "description": null,
-    "lineNumber": 30,
+    "lineNumber": 29,
     "type": {
       "nullable": null,
       "types": [
@@ -724,7 +724,7 @@
     "longname": "src/main.js~LinkedFuncList#func",
     "access": "public",
     "description": null,
-    "lineNumber": 35,
+    "lineNumber": 34,
     "type": {
       "nullable": null,
       "types": [
@@ -746,11 +746,11 @@
     "longname": "src/main.js~LinkedFuncList#[Symbol.iterator]",
     "access": "public",
     "description": null,
-    "lineNumber": 42,
+    "lineNumber": 41,
     "type": {
       "nullable": null,
       "types": [
-        "generator"
+        "GeneratorFunction"
       ],
       "spread": false,
       "description": null
@@ -766,8 +766,8 @@
     "static": false,
     "longname": "src/main.js~LinkedFuncList#chainCall",
     "access": "public",
-    "description": "async chainCall\nreturns a Promise corresponding to the ordered unique set of calls to func properties of the `next` properties of the LinkedFuncList",
-    "lineNumber": 58,
+    "description": "call this list's functions mutating a start value\nthrough nodes' functions until done.",
+    "lineNumber": 57,
     "params": [
       {
         "nullable": null,
@@ -777,7 +777,7 @@
         "spread": false,
         "optional": true,
         "name": "start",
-        "description": "any starting payload"
+        "description": "any start value"
       }
     ],
     "return": {
@@ -786,7 +786,7 @@
         "Promise"
       ],
       "spread": false,
-      "description": ""
+      "description": "resolves to single value or Error"
     }
   },
   {
@@ -799,8 +799,8 @@
     "static": false,
     "longname": "src/main.js~LinkedFuncList#callAll",
     "access": "public",
-    "description": "async callAll\nreturns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList",
-    "lineNumber": 91,
+    "description": "call all of the list's functions with start value.",
+    "lineNumber": 88,
     "params": [
       {
         "nullable": null,
@@ -810,7 +810,7 @@
         "spread": false,
         "optional": true,
         "name": "start",
-        "description": "any starting payload"
+        "description": "any start value"
       }
     ],
     "return": {
@@ -819,7 +819,7 @@
         "Promise"
       ],
       "spread": false,
-      "description": ""
+      "description": "resolves to Array or Error"
     }
   },
   {
@@ -832,8 +832,8 @@
     "static": false,
     "longname": "src/main.js~LinkedFuncList#link",
     "access": "public",
-    "description": "link\ncreates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called",
-    "lineNumber": 118,
+    "description": "adds some links to this list\n\nparses each link:\n- if link isnt already a LinkedFuncList instance, make a new one.\n- if link is a function, the new instance contains that function.\n- if link isn't a function, the new instance contains a function that returns link.",
+    "lineNumber": 117,
     "params": [
       {
         "nullable": null,
@@ -844,22 +844,15 @@
         ],
         "spread": false,
         "optional": true,
-        "name": "linkees",
-        "description": "the LinkedFuncList instances to link up or the functions and objects to use to create new instances"
+        "name": "links",
+        "description": "the links to add"
       }
     ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Promise"
-      ],
-      "spread": false,
-      "description": ""
-    }
+    "return": null
   },
   {
     "kind": "index",
-    "content": "![Version](https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg) [![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)[![Source Documentation](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/badge.svg)](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/source.html)\n\n[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]()\n[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)\n\n# linkedfunclist\nYet another linked list whose elements store functions.\n\n## Installation\n\n    npm install linkedfunclist\n\n## Documentation\n\nPlease see **./docs/index.html**\n\n## Contributing Guidelines\n1. Specification outline (see [Docs > Specification](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/manual/specification.html)) must be updated to include new functionality.\n2. All tests must pass and have descriptive tags that make it easy to tell which areas of the specification  they satisfy _e.g._ `4.e.A`.\n3. Code must adhere to [JavaScript Standard Style](https://standardjs.com).\n4. New code must include [ESDoc documentation](https://esdoc.org/).\n5. Build must pass [TravisCI](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist).\n\nThanks.\n\n## License\n[Unlicense](https://unlicense.org/)\n\n## Author\n[Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)\n",
+    "content": "![Version](https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg) [![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)[![Source Documentation](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/badge.svg)](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/source.html)\n\n------------\n\n[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]() [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)\n\n--------------\n\n# linkedfunclist\nA linked list whose elements can store functions.\n\n## Installation\n\n    npm install linkedfunclist\n\n## Documentation\n\nPlease see [Docs](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/).\n\n## Contributing Guidelines\n1. Specification outline (see [Docs > Specification](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/manual/specification.html)) must be updated to include new functionality.\n2. All tests must pass and have descriptive tags that make it easy to tell which areas of the specification  they satisfy _e.g._ `4.e.A`.\n3. Code must adhere to [JavaScript Standard Style](https://standardjs.com).\n4. New code must include [ESDoc documentation](https://esdoc.org/).\n5. Build must pass [TravisCI](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist).\n\nThanks.\n\n## License\n[Unlicense](https://unlicense.org/)\n\n## Author\n[Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)\n",
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/README.md",
     "name": "./README.md",
     "static": true,
@@ -876,7 +869,7 @@
   {
     "kind": "manualIndex",
     "globalIndex": true,
-    "content": "![Version](https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg) [![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)[![Source Documentation](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/badge.svg)](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/source.html)\n\n[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]()\n[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)\n\n# linkedfunclist\nYet another linked list whose elements store functions.\n\n## Installation\n\n    npm install linkedfunclist\n\n## Documentation\n\nPlease see **./docs/index.html**\n\n## Contributing Guidelines\n1. Specification outline (see [Docs > Specification](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/manual/specification.html)) must be updated to include new functionality.\n2. All tests must pass and have descriptive tags that make it easy to tell which areas of the specification  they satisfy _e.g._ `4.e.A`.\n3. Code must adhere to [JavaScript Standard Style](https://standardjs.com).\n4. New code must include [ESDoc documentation](https://esdoc.org/).\n5. Build must pass [TravisCI](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist).\n\nThanks.\n\n## License\n[Unlicense](https://unlicense.org/)\n\n## Author\n[Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)\n",
+    "content": "![Version](https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg) [![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)[![Source Documentation](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/badge.svg)](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/source.html)\n\n------------\n\n[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]() [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)\n\n--------------\n\n# linkedfunclist\nA linked list whose elements can store functions.\n\n## Installation\n\n    npm install linkedfunclist\n\n## Documentation\n\nPlease see [Docs](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/).\n\n## Contributing Guidelines\n1. Specification outline (see [Docs > Specification](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/manual/specification.html)) must be updated to include new functionality.\n2. All tests must pass and have descriptive tags that make it easy to tell which areas of the specification  they satisfy _e.g._ `4.e.A`.\n3. Code must adhere to [JavaScript Standard Style](https://standardjs.com).\n4. New code must include [ESDoc documentation](https://esdoc.org/).\n5. Build must pass [TravisCI](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist).\n\nThanks.\n\n## License\n[Unlicense](https://unlicense.org/)\n\n## Author\n[Anwar Hahj Jefferson-George](https://github.com/anwarhahjjeffersongeorge)\n",
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/README.md",
     "name": "./README.md",
     "static": true,
