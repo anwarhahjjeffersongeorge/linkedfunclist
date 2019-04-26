@@ -105,7 +105,7 @@
           "manual": {
             "index": "./README.md",
             "globalIndex": true,
-            "asset": "./manual/asset",
+            "asset": "",
             "files": [
               "./manual/specification.md",
               "./manual/usage.md"
