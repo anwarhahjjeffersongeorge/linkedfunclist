@@ -325,13 +325,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/main.js~linkedfunclist#func",
-    "class/src/main.js~LinkedFuncList.html#instance-get-func",
+    "class/src/main.js~LinkedFuncList.html#instance-set-func",
     "src/main.js~LinkedFuncList#func",
     "member"
   ],
   [
     "src/main.js~linkedfunclist#func",
-    "class/src/main.js~LinkedFuncList.html#instance-set-func",
+    "class/src/main.js~LinkedFuncList.html#instance-get-func",
     "src/main.js~LinkedFuncList#func",
     "member"
   ],
@@ -343,13 +343,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/main.js~linkedfunclist#next",
-    "class/src/main.js~LinkedFuncList.html#instance-get-next",
+    "class/src/main.js~LinkedFuncList.html#instance-set-next",
     "src/main.js~LinkedFuncList#next",
     "member"
   ],
   [
     "src/main.js~linkedfunclist#next",
-    "class/src/main.js~LinkedFuncList.html#instance-set-next",
+    "class/src/main.js~LinkedFuncList.html#instance-get-next",
     "src/main.js~LinkedFuncList#next",
     "member"
   ]
