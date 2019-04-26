@@ -1,10 +1,13 @@
 ![Version](https://img.shields.io/github/package-json/v/anwarhahjjeffersongeorge/linkedfunclist/master.svg) [![Build Status](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist.svg?branch=master)](https://travis-ci.com/anwarhahjjeffersongeorge/linkedfunclist) [![codecov](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist/branch/master/graph/badge.svg)](https://codecov.io/gh/anwarhahjjeffersongeorge/linkedfunclist)[![Source Documentation](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/badge.svg)](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/source.html)
 
-[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]()
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)
+------------
+
+[![license](https://img.shields.io/github/license/anwarhahjjeffersongeorge/linkedfunclist.svg)]() [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)
+
+--------------
 
 # linkedfunclist
-Yet another linked list whose elements store functions.
+A linked list whose elements can store functions.
 
 ## Installation
 
@@ -12,7 +15,7 @@ Yet another linked list whose elements store functions.
 
 ## Documentation
 
-Please see **./docs/index.html**
+Please see [Docs](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/).
 
 ## Contributing Guidelines
 1. Specification outline (see [Docs > Specification](https://anwarhahjjeffersongeorge.github.io/linkedfunclist/manual/specification.html)) must be updated to include new functionality.

@@ -1,6 +1,5 @@
 // ESM syntax is supported.
 /**
- * LinkedFuncList
  * A class of linked lists that contain function data.
  */
 class LinkedFuncList {
@@ -38,7 +37,7 @@ class LinkedFuncList {
       : this._func
   }
 
-  /** @type {generator} */
+  /** @type {GeneratorFunction} */
   get [Symbol.iterator] () {
     return function * (startingthis = this) {
       yield this
@@ -49,11 +48,11 @@ class LinkedFuncList {
   }
 
   /**
-   * async chainCall
-   * returns a Promise corresponding to the ordered unique set of calls to func properties of the `next` properties of the LinkedFuncList
+   * call this list's functions mutating a start value
+   * through nodes' functions until done.
    *
-   * @param {object} [start] - any starting payload
-   * @return {Promise}
+   * @param {object} [start] - any start value
+   * @return {Promise} resolves to single value or Error
    */
   async chainCall (start) {
     const iterator = this[Symbol.iterator]()
@@ -81,12 +80,10 @@ class LinkedFuncList {
     return promise
   }
 
-  /**
-   * async callAll
-   * returns a Promise corresponding to the ordered unique set of simultaneous calls to func properties of the next properties of the LinkedFuncList
+  /** call all of the list's functions with start value.
    *
-   * @param {object} [start] - any starting payload
-   * @return {Promise}
+   * @param {object} [start] - any start value
+   * @return {Promise} resolves to Array or Error
    */
   async callAll (start) {
     const iterator = [...this].map(async ({ func }) => {
@@ -108,30 +105,32 @@ class LinkedFuncList {
     return promise
   }
 
-  /**
-   * link
-   * creates a chained list of LinkedFuncList instances attached to this instance, creating new LinkedFuncList to replace any arguments that are not already LinkedFuncList instances, and setting the func property of a new instance to a function that either corresponds to the supplied function argument or returns its value when called
+  /** adds some links to this list
    *
-   * @param {(function|LinkedFuncList|object)} [linkees] - the LinkedFuncList instances to link up or the functions and objects to use to create new instances
-   * @return {Promise}
+   * parses each link:
+   * - if link isnt already a LinkedFuncList instance, make a new one.
+   * - if link is a function, the new instance contains that function.
+   * - if link isn't a function, the new instance contains a function that returns link.
+   *
+   * @param {(function|LinkedFuncList|object)} [links] - the links to add
    */
-  link (...linkees) {
-    if (linkees.length > 0) {
+  link (...links) {
+    if (links.length > 0) {
       let current = this
-      linkees.forEach((linkee, i) => {
-        if (!(linkee instanceof LinkedFuncList)) {
-          if (typeof linkee === 'function') {
-            const f = linkee
-            linkee = new LinkedFuncList()
-            linkee.func = f
+      links.forEach((link, i) => {
+        if (!(link instanceof LinkedFuncList)) {
+          if (typeof link === 'function') {
+            const f = link
+            link = new LinkedFuncList()
+            link.func = f
           } else {
-            const s = linkee
-            linkee = new LinkedFuncList()
-            linkee.func = () => s
+            const s = link
+            link = new LinkedFuncList()
+            link.func = () => s
           }
         }
-        current.next = linkee
-        current = linkee
+        current.next = link
+        current = link
       })
     }
   }
