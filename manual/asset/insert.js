@@ -13,10 +13,14 @@ window.onload = function () {
         if (!response.ok) {
           throw new Error('HTTP error, status = ' + response.status)
         }
-        return response.blob().text()
+        return response.blob()
       })
       .then(function (response) {
-        usageEl.innerText = response
+        let reader = new FileReader()
+        reader.onload = function (e) {
+          usageEl.innerText = e.target.result
+        }
+        reader.readAsText(r)
       })
   }
 }

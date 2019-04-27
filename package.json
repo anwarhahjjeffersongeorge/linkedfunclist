@@ -1,6 +1,6 @@
 {
   "name": "linkedfunclist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A linked list whose elements store functions.",
   "main": "./src/index.js",
   "module": "./src/main.js",
@@ -137,8 +137,7 @@
         "option": {
           "enable": true,
           "scripts": [
-            "./manual/asset/insert.js",
-            "./manual/asset/usage.js"
+            "./manual/asset/insert.js"
           ]
         }
       }
