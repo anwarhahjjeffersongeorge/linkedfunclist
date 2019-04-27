@@ -20,7 +20,7 @@ window.onload = function () {
         reader.onload = function (e) {
           usageEl.innerText = e.target.result
         }
-        reader.readAsText(r)
+        reader.readAsText(response)
       })
   }
 }
