@@ -37,6 +37,19 @@ class LinkedFuncList {
       : this._func
   }
 
+  /** The number of nodes in this list, including this instance.
+   * @type {number}
+   */
+  get length () {
+    let e = 1
+    let next = this.next
+    while (next instanceof LinkedFuncList) {
+      e++
+      next = next.next
+    }
+    return e
+  }
+
   /** @type {GeneratorFunction} */
   get [Symbol.iterator] () {
     return function * (startingthis = this) {
