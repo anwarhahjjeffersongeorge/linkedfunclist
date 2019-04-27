@@ -13,7 +13,9 @@ class LinkedFuncList {
     this._next = null
   }
 
-  /** @type {null|LinkedFuncList} The next node in the list. */
+  /**  The next node in the list.
+    *  @type {null|LinkedFuncList}
+    */
   get next () {
     return this._next
   }
@@ -25,7 +27,9 @@ class LinkedFuncList {
       : this._next
   }
 
-  /** @type {null|function} The function data for this list node.  */
+  /** The function data for this list node.
+    *  @type {null|function}
+    */
   get func () {
     return this._func
   }
