@@ -39,7 +39,7 @@ This module exports a single class, `LinkedFuncList`.
 ### 5. `callAll`
 
 - a. is an `asynchronous function` that accepts any `start` argument,
-- b. returns a `Promise` corresponding to the ordered set of _simultaneous_ calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where
+- b. returns a `Promise` corresponding to the ordered set of calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where
  - A. all functions recieve the `start` argument
  - B. the functions are called with their `this` values set to this `LinkedFuncList` instance (the initiator of the traversal
  - C. errors thrown in the functions cause the `Promise` to reject
