@@ -358,3 +358,13 @@ test('6.b|6.c.A|6.c.B|6.c.C "link"', t => {
     }
   }
 })
+
+/** @test {LinkedFuncList#length} */
+test('7.a|7.b "length"', t => {
+  let numToAdd = Math.floor(111 * Math.random())
+  let testl = new LinkedFuncList()
+  t.is(testl.length, 1, 'minimum length of 1')
+  let testArgs = Array(numToAdd)
+  testl.link(...testArgs)
+  t.is(testl.length, 1 + numToAdd, 'length should match number of nodes in list')
+})

@@ -55,3 +55,8 @@ This module exports a single class, `LinkedFuncList`.
   - A. the first element in the chain is this instance (the caller)
   - B. the order of the elements in the chain correspond to the order of arguments supplied to the `link` function
   - C. `function`-valued arguments are replaced with new `LinkedFuncList` instances whose `func` properties correspond to the argument being replaced
+
+### 7. `length`
+
+- a. is a `number`  always greater than 0
+- b. reveals the number of `LinkedFuncList` instances in this list, including this current instance
