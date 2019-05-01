@@ -578,7 +578,7 @@
     "__docId__": 49,
     "kind": "file",
     "name": "src/main.js",
-    "content": "// ESM syntax is supported.\n/**\n * A class of linked lists that contain function data.\n */\nclass LinkedFuncList {\n  /**\n   * Create a new LinkedFuncList instance.\n   */\n  constructor () {\n    /** @ignore */\n    this._func = null\n    /** @ignore */\n    this._next = null\n  }\n\n  /** @type {null|LinkedFuncList} The next node in the list. */\n  get next () {\n    return this._next\n  }\n\n  /** @type {null|LinkedFuncList} */\n  set next (n) {\n    this._next = ((n === null) || (n instanceof LinkedFuncList))\n      ? n\n      : this._next\n  }\n\n  /** @type {null|function} The function data for this list node.  */\n  get func () {\n    return this._func\n  }\n\n  /** @type {null|function} */\n  set func (f) {\n    this._func = ((f === null) || (typeof f === 'function'))\n      ? f\n      : this._func\n  }\n\n  /** @type {GeneratorFunction} */\n  get [Symbol.iterator] () {\n    return function * (startingthis = this) {\n      yield this\n      if ((this.next instanceof LinkedFuncList) && (this.next !== startingthis)) {\n        yield * this.next[Symbol.iterator](startingthis)\n      }\n    }\n  }\n\n  /**\n   * call this list's functions mutating a start value\n   * through nodes' functions until done.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to single value or Error\n   */\n  async chainCall (start) {\n    const iterator = this[Symbol.iterator]()\n    let promise = new Promise(async (resolve, reject) => {\n      let loop = {\n        i: 0,\n        payload: start\n      }\n      for (let list of iterator) {\n        const func = (typeof list.func === 'function')\n          ? list.func\n          : m => m\n        try {\n          // console.log('oo o', loop.payload)\n          loop.payload = await func.call(this, loop.payload)\n          // console.log('oooo', loop.payload)\n        } catch (e) {\n          reject(e)\n        } finally {\n          loop.i++\n        }\n      }\n      resolve(loop.payload)\n    })\n    return promise\n  }\n\n  /** call all of the list's functions with start value.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to Array or Error\n   */\n  async callAll (start) {\n    const iterator = [...this].map(async ({ func }) => {\n      func = (typeof func === 'function')\n        ? func\n        : m => m\n      return new Promise(async (resolve, reject) => {\n        try {\n          // console.log('oo o', loop.payload)\n          let result = await func.call(this, start)\n          // console.log('oooo', loop.payload)\n          resolve(result)\n        } catch (e) {\n          reject(e)\n        }\n      })\n    })\n    let promise = Promise.all(iterator)\n    return promise\n  }\n\n  /** adds some links to this list\n   *\n   * parses each link:\n   * - if link isnt already a LinkedFuncList instance, make a new one.\n   * - if link is a function, the new instance contains that function.\n   * - if link isn't a function, the new instance contains a function that returns link.\n   *\n   * @param {(function|LinkedFuncList|object)} [links] - the links to add\n   */\n  link (...links) {\n    if (links.length > 0) {\n      let current = this\n      links.forEach((link, i) => {\n        if (!(link instanceof LinkedFuncList)) {\n          if (typeof link === 'function') {\n            const f = link\n            link = new LinkedFuncList()\n            link.func = f\n          } else {\n            const s = link\n            link = new LinkedFuncList()\n            link.func = () => s\n          }\n        }\n        current.next = link\n        current = link\n      })\n    }\n  }\n}\n\nexport { LinkedFuncList }\n",
+    "content": "// ESM syntax is supported.\n/**\n * A class of linked lists that contain function data.\n */\nclass LinkedFuncList {\n  /**\n   * Create a new LinkedFuncList instance.\n   */\n  constructor () {\n    /** @ignore */\n    this._func = null\n    /** @ignore */\n    this._next = null\n  }\n\n  /**  The next node in the list.\n    *  @type {null|LinkedFuncList}\n    */\n  get next () {\n    return this._next\n  }\n\n  /** @type {null|LinkedFuncList} */\n  set next (n) {\n    this._next = ((n === null) || (n instanceof LinkedFuncList))\n      ? n\n      : this._next\n  }\n\n  /** The function data for this list node.\n    *  @type {null|function}\n    */\n  get func () {\n    return this._func\n  }\n\n  /** @type {null|function} */\n  set func (f) {\n    this._func = ((f === null) || (typeof f === 'function'))\n      ? f\n      : this._func\n  }\n\n  /** The number of nodes in this list, including this instance.\n   * @type {number}\n   */\n  get length () {\n    let e = 1\n    let next = this.next\n    while (next instanceof LinkedFuncList) {\n      e++\n      next = next.next\n    }\n    return e\n  }\n\n  /** @type {GeneratorFunction} */\n  get [Symbol.iterator] () {\n    return function * (startingthis = this) {\n      yield this\n      if ((this.next instanceof LinkedFuncList) && (this.next !== startingthis)) {\n        yield * this.next[Symbol.iterator](startingthis)\n      }\n    }\n  }\n\n  /**\n   * call this list's functions mutating a start value\n   * through nodes' functions until done.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to single value or Error\n   */\n  async chainCall (start) {\n    const iterator = this[Symbol.iterator]()\n    let promise = new Promise(async (resolve, reject) => {\n      let loop = {\n        i: 0,\n        payload: start\n      }\n      for (let list of iterator) {\n        const func = (typeof list.func === 'function')\n          ? list.func\n          : m => m\n        try {\n          // console.log('oo o', loop.payload)\n          loop.payload = await func.call(this, loop.payload)\n          // console.log('oooo', loop.payload)\n        } catch (e) {\n          reject(e)\n        } finally {\n          loop.i++\n        }\n      }\n      resolve(loop.payload)\n    })\n    return promise\n  }\n\n  /** call all of the list's functions with start value.\n   *\n   * @param {object} [start] - any start value\n   * @return {Promise} resolves to Array or Error\n   */\n  async callAll (start) {\n    const iterator = [...this].map(async ({ func }) => {\n      func = (typeof func === 'function')\n        ? func\n        : m => m\n      return new Promise(async (resolve, reject) => {\n        try {\n          // console.log('oo o', loop.payload)\n          let result = await func.call(this, start)\n          // console.log('oooo', loop.payload)\n          resolve(result)\n        } catch (e) {\n          reject(e)\n        }\n      })\n    })\n    let promise = Promise.all(iterator)\n    return promise\n  }\n\n  /** adds some links to this list\n   *\n   * parses each link:\n   * - if link isnt already a LinkedFuncList instance, make a new one.\n   * - if link is a function, the new instance contains that function.\n   * - if link isn't a function, the new instance contains a function that returns link.\n   *\n   * @param {(function|LinkedFuncList|object)} [links] - the links to add\n   */\n  link (...links) {\n    if (links.length > 0) {\n      let current = this\n      links.forEach((link, i) => {\n        if (!(link instanceof LinkedFuncList)) {\n          if (typeof link === 'function') {\n            const f = link\n            link = new LinkedFuncList()\n            link.func = f\n          } else {\n            const s = link\n            link = new LinkedFuncList()\n            link.func = () => s\n          }\n        }\n        current.next = link\n        current = link\n      })\n    }\n  }\n}\n\nexport { LinkedFuncList }\n",
     "static": true,
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/src/main.js",
     "access": "public",
@@ -657,8 +657,8 @@
     "static": false,
     "longname": "src/main.js~LinkedFuncList#next",
     "access": "public",
-    "description": null,
-    "lineNumber": 17,
+    "description": " The next node in the list.",
+    "lineNumber": 19,
     "type": {
       "nullable": null,
       "types": [
@@ -680,7 +680,7 @@
     "longname": "src/main.js~LinkedFuncList#next",
     "access": "public",
     "description": null,
-    "lineNumber": 22,
+    "lineNumber": 24,
     "type": {
       "nullable": null,
       "types": [
@@ -701,8 +701,8 @@
     "static": false,
     "longname": "src/main.js~LinkedFuncList#func",
     "access": "public",
-    "description": null,
-    "lineNumber": 29,
+    "description": "The function data for this list node.",
+    "lineNumber": 33,
     "type": {
       "nullable": null,
       "types": [
@@ -724,7 +724,7 @@
     "longname": "src/main.js~LinkedFuncList#func",
     "access": "public",
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 38,
     "type": {
       "nullable": null,
       "types": [
@@ -738,6 +738,27 @@
   {
     "__docId__": 60,
     "kind": "get",
+    "name": "length",
+    "memberof": "src/main.js~LinkedFuncList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/main.js~LinkedFuncList#length",
+    "access": "public",
+    "description": "The number of nodes in this list, including this instance.",
+    "lineNumber": 47,
+    "type": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "get",
     "name": "[Symbol.iterator]",
     "memberof": "src/main.js~LinkedFuncList",
     "generator": false,
@@ -746,7 +767,7 @@
     "longname": "src/main.js~LinkedFuncList#[Symbol.iterator]",
     "access": "public",
     "description": null,
-    "lineNumber": 41,
+    "lineNumber": 58,
     "type": {
       "nullable": null,
       "types": [
@@ -757,7 +778,7 @@
     }
   },
   {
-    "__docId__": 61,
+    "__docId__": 62,
     "kind": "method",
     "name": "chainCall",
     "memberof": "src/main.js~LinkedFuncList",
@@ -767,7 +788,7 @@
     "longname": "src/main.js~LinkedFuncList#chainCall",
     "access": "public",
     "description": "call this list's functions mutating a start value\nthrough nodes' functions until done.",
-    "lineNumber": 57,
+    "lineNumber": 74,
     "params": [
       {
         "nullable": null,
@@ -790,7 +811,7 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 63,
     "kind": "method",
     "name": "callAll",
     "memberof": "src/main.js~LinkedFuncList",
@@ -800,7 +821,7 @@
     "longname": "src/main.js~LinkedFuncList#callAll",
     "access": "public",
     "description": "call all of the list's functions with start value.",
-    "lineNumber": 88,
+    "lineNumber": 105,
     "params": [
       {
         "nullable": null,
@@ -823,7 +844,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 64,
     "kind": "method",
     "name": "link",
     "memberof": "src/main.js~LinkedFuncList",
@@ -833,7 +854,7 @@
     "longname": "src/main.js~LinkedFuncList#link",
     "access": "public",
     "description": "adds some links to this list\n\nparses each link:\n- if link isnt already a LinkedFuncList instance, make a new one.\n- if link is a function, the new instance contains that function.\n- if link isn't a function, the new instance contains a function that returns link.",
-    "lineNumber": 117,
+    "lineNumber": 134,
     "params": [
       {
         "nullable": null,
@@ -860,7 +881,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"linkedfunclist\",\n  \"version\": \"1.0.3\",\n  \"description\": \"A linked list whose elements store functions.\",\n  \"main\": \"./src/index.js\",\n  \"module\": \"./src/main.js\",\n  \"scripts\": {\n    \"clean\": \"rm -rf .nyc_output/* coverage/* docs/*\",\n    \"predoc\": \"rm -rf docs/*\",\n    \"doc\": \"esdoc\",\n    \"pretest\": \"clear && standard --fix \\\"./src/index.js\\\" \\\"./src/main.js\\\" \",\n    \"test\": \"cross-env NODE_ENV=test nyc --reporter=lcov --reporter=html ava\",\n    \"pretestw\": \"clear\",\n    \"testw\": \"ava --watch\",\n    \"coverage\": \"codecov\",\n    \"preversion\": \"npm test && npm run doc\",\n    \"postversion\": \"git push\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"github:anwarhahjjeffersongeorge/linkedfunclist\"\n  },\n  \"keywords\": [\n    \"linked\",\n    \"list\",\n    \"promise\",\n    \"function\"\n  ],\n  \"author\": \"Anwar Hahj Jefferson-George <anwarhahjjeffersongeorge@gmail.com>\",\n  \"license\": \"Unlicense\",\n  \"dependencies\": {\n    \"esm\": \"^3.2.22\"\n  },\n  \"devDependencies\": {\n    \"ava\": \"^1.4.1\",\n    \"codecov\": \"^3.3.0\",\n    \"cross-env\": \"^5.2.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-script-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"nyc\": \"^14.0.0\",\n    \"standard\": \"^12.0.1\"\n  },\n  \"ava\": {\n    \"files\": [\n      \"test/**/*.js\"\n    ],\n    \"sources\": [\n      \"**/*.js\"\n    ],\n    \"color\": true,\n    \"cache\": true,\n    \"concurrency\": 5,\n    \"failFast\": true,\n    \"failWithoutAssertions\": true,\n    \"tap\": true,\n    \"verbose\": true,\n    \"compileEnhancements\": true,\n    \"require\": [\n      \"esm\"\n    ]\n  },\n  \"esdoc\": {\n    \"source\": \"./src\",\n    \"destination\": \"./docs\",\n    \"includes\": [\n      \"\\\\.js$\"\n    ],\n    \"excludes\": [\n      \"\\\\.config\\\\.js$\"\n    ],\n    \"plugins\": [\n      {\n        \"name\": \"esdoc-standard-plugin\",\n        \"option\": {\n          \"lint\": {\n            \"enable\": true\n          },\n          \"coverage\": {\n            \"enable\": true\n          },\n          \"accessor\": {\n            \"access\": [\n              \"public\",\n              \"protected\",\n              \"private\"\n            ],\n            \"autoPrivate\": true\n          },\n          \"undocumentIdentifier\": {\n            \"enable\": true\n          },\n          \"unexportedIdentifier\": {\n            \"enable\": false\n          },\n          \"typeInference\": {\n            \"enable\": true\n          },\n          \"brand\": {\n            \"logo\": \"\",\n            \"title\": \"linkedfunclist\",\n            \"description\": \"A linked list whose elements store functions.\",\n            \"repository\": \"https://github.com/anwarhahjjeffersongeorge/linkedfunclist\",\n            \"site\": \"https://anwarhahjjeffersongeorge.github.io/linkedfunclist/\",\n            \"author\": \"https://github.com/anwarhahjjeffersongeorge\",\n            \"image\": \"\"\n          },\n          \"manual\": {\n            \"index\": \"./README.md\",\n            \"globalIndex\": true,\n            \"asset\": \"./manual/asset\",\n            \"files\": [\n              \"./manual/specification.md\",\n              \"./manual/usage.md\"\n            ]\n          },\n          \"test\": {\n            \"source\": \"./test/\",\n            \"interfaces\": [\n              \"describe\",\n              \"it\",\n              \"context\",\n              \"suite\",\n              \"test\"\n            ],\n            \"includes\": [\n              \"(spec|Spec|test|Test)\\\\.js$\"\n            ],\n            \"excludes\": [\n              \"\\\\.config\\\\.js$\"\n            ]\n          }\n        }\n      },\n      {\n        \"name\": \"esdoc-inject-script-plugin\",\n        \"option\": {\n          \"enable\": true,\n          \"scripts\": [\n            \"./manual/asset/insert.js\"\n          ]\n        }\n      }\n    ]\n  },\n  \"nyc\": {\n    \"exclude\": [\n      \"coverage/**\",\n      \"node_modules/**\",\n      \"test/**\"\n    ],\n    \"include\": [\n      \"src/**/*.js\"\n    ],\n    \"sourceMap\": true,\n    \"instrument\": true,\n    \"reporter\": \"html\"\n  }\n}\n",
+    "content": "{\n  \"name\": \"linkedfunclist\",\n  \"version\": \"1.2.0\",\n  \"description\": \"A linked list whose elements store functions.\",\n  \"main\": \"./src/index.js\",\n  \"module\": \"./src/main.js\",\n  \"scripts\": {\n    \"clean\": \"rm -rf .nyc_output/* coverage/* docs/*\",\n    \"predoc\": \"rm -rf docs/*\",\n    \"doc\": \"esdoc\",\n    \"pretest\": \"clear && standard --fix \\\"./src/index.js\\\" \\\"./src/main.js\\\" \",\n    \"test\": \"cross-env NODE_ENV=test nyc --reporter=lcov --reporter=html ava\",\n    \"pretestw\": \"clear\",\n    \"testw\": \"ava --watch\",\n    \"coverage\": \"codecov\",\n    \"preversion\": \"npm test && npm run doc\",\n    \"postversion\": \"git push\"\n  },\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"github:anwarhahjjeffersongeorge/linkedfunclist\"\n  },\n  \"keywords\": [\n    \"linked\",\n    \"list\",\n    \"promise\",\n    \"function\"\n  ],\n  \"author\": \"Anwar Hahj Jefferson-George <anwarhahjjeffersongeorge@gmail.com>\",\n  \"license\": \"Unlicense\",\n  \"dependencies\": {\n    \"esm\": \"^3.2.22\"\n  },\n  \"devDependencies\": {\n    \"ava\": \"^1.4.1\",\n    \"codecov\": \"^3.3.0\",\n    \"cross-env\": \"^5.2.0\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-inject-script-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"nyc\": \"^14.0.0\",\n    \"standard\": \"^12.0.1\"\n  },\n  \"ava\": {\n    \"files\": [\n      \"test/**/*.js\"\n    ],\n    \"sources\": [\n      \"**/*.js\"\n    ],\n    \"color\": true,\n    \"cache\": true,\n    \"concurrency\": 5,\n    \"failFast\": true,\n    \"failWithoutAssertions\": true,\n    \"tap\": true,\n    \"verbose\": true,\n    \"compileEnhancements\": true,\n    \"require\": [\n      \"esm\"\n    ]\n  },\n  \"esdoc\": {\n    \"source\": \"./src\",\n    \"destination\": \"./docs\",\n    \"includes\": [\n      \"\\\\.js$\"\n    ],\n    \"excludes\": [\n      \"\\\\.config\\\\.js$\"\n    ],\n    \"plugins\": [\n      {\n        \"name\": \"esdoc-standard-plugin\",\n        \"option\": {\n          \"lint\": {\n            \"enable\": true\n          },\n          \"coverage\": {\n            \"enable\": true\n          },\n          \"accessor\": {\n            \"access\": [\n              \"public\",\n              \"protected\",\n              \"private\"\n            ],\n            \"autoPrivate\": true\n          },\n          \"undocumentIdentifier\": {\n            \"enable\": true\n          },\n          \"unexportedIdentifier\": {\n            \"enable\": false\n          },\n          \"typeInference\": {\n            \"enable\": true\n          },\n          \"brand\": {\n            \"logo\": \"\",\n            \"title\": \"linkedfunclist\",\n            \"description\": \"A linked list whose elements store functions.\",\n            \"repository\": \"https://github.com/anwarhahjjeffersongeorge/linkedfunclist\",\n            \"site\": \"https://anwarhahjjeffersongeorge.github.io/linkedfunclist/\",\n            \"author\": \"https://github.com/anwarhahjjeffersongeorge\",\n            \"image\": \"\"\n          },\n          \"manual\": {\n            \"index\": \"./README.md\",\n            \"globalIndex\": true,\n            \"asset\": \"./manual/asset\",\n            \"files\": [\n              \"./manual/specification.md\",\n              \"./manual/usage.md\"\n            ]\n          },\n          \"test\": {\n            \"source\": \"./test/\",\n            \"interfaces\": [\n              \"describe\",\n              \"it\",\n              \"context\",\n              \"suite\",\n              \"test\"\n            ],\n            \"includes\": [\n              \"(spec|Spec|test|Test)\\\\.js$\"\n            ],\n            \"excludes\": [\n              \"\\\\.config\\\\.js$\"\n            ]\n          }\n        }\n      },\n      {\n        \"name\": \"esdoc-inject-script-plugin\",\n        \"option\": {\n          \"enable\": true,\n          \"scripts\": [\n            \"./manual/asset/insert.js\"\n          ]\n        }\n      }\n    ]\n  },\n  \"nyc\": {\n    \"exclude\": [\n      \"coverage/**\",\n      \"node_modules/**\",\n      \"test/**\"\n    ],\n    \"include\": [\n      \"src/**/*.js\"\n    ],\n    \"sourceMap\": true,\n    \"instrument\": true,\n    \"reporter\": \"html\"\n  }\n}\n",
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/package.json",
     "name": "package.json",
     "static": true,
@@ -886,7 +907,7 @@
     "kind": "manual",
     "longname": "/home/travis/build/anwarhahjjeffersongeorge/linkedfunclist/manual/specification.md",
     "name": "./manual/specification.md",
-    "content": "# Specification\nThis module exports a single class, `LinkedFuncList`.\n\n##  Instance Properties:\n\n### 1. `next`\n\n- a. is `null` by default\n- b. can only have a value of\n  - `null`, or\n  - an instance of `LinkedFuncList`, self-inclusive\n\n### 2. `func`\n\n- a. is `null` by default\n- b. can only have a value of\n  - `null`, or\n  - an `object` of type `function`\n\n### 3. `[Symbol.iterator]`\n- a. returns a `generator function`  that produces the ordered unique set of `next` properties\n  - A. starting with this `LinkedFuncList` instance,\n  - B. continuing with all `LinkedFuncList` instances linked via `next`, and\n  - C. terminating before any `next` whose value is\n    - i. `null`, or\n    - j.  this (starting) `LinkedFuncList` instance.\n\n### 4. `chainCall`\n\n- a. is an `asynchronous function` that accepts any `start` argument,\n- b. returns a `Promise` corresponding to the ordered set of _chained_ calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where\n  - A. the starting function recieves the `start` argument\n  - B. each function called in the `Promise` recieves the result of the previous function in the chain\n  - C. the functions are called with their `this` values set to this `LinkedFuncList` instance (the initiator of the traversal\n  - D. errors thrown in the functions cause the `Promise` to reject\n  - E. the order of the calls to the functions corresponds to the order of iteration produced by `this[Symbol.iterator]` even if the functions are asynchronous\n  - F. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it\n\n### 5. `callAll`\n\n- a. is an `asynchronous function` that accepts any `start` argument,\n- b. returns a `Promise` corresponding to the ordered set of _simultaneous_ calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where\n - A. all functions recieve the `start` argument\n - B. the functions are called with their `this` values set to this `LinkedFuncList` instance (the initiator of the traversal\n - C. errors thrown in the functions cause the `Promise` to reject\n - D. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it\n\n### 6. `link`\n\n- a. is a `function` that accepts any number of arguments\n- b. substitutes passthrough functions for arguments that are not\n  - `function` objects, or\n  - `LinkedFuncList` instances\n- c. creates a chained list of `LinkedFuncList` instances where\n  - A. the first element in the chain is this instance (the caller)\n  - B. the order of the elements in the chain correspond to the order of arguments supplied to the `link` function\n  - C. `function`-valued arguments are replaced with new `LinkedFuncList` instances whose `func` properties correspond to the argument being replaced\n",
+    "content": "# Specification\nThis module exports a single class, `LinkedFuncList`.\n\n##  Instance Properties:\n\n### 1. `next`\n\n- a. is `null` by default\n- b. can only have a value of\n  - `null`, or\n  - an instance of `LinkedFuncList`, self-inclusive\n\n### 2. `func`\n\n- a. is `null` by default\n- b. can only have a value of\n  - `null`, or\n  - an `object` of type `function`\n\n### 3. `[Symbol.iterator]`\n- a. returns a `generator function`  that produces the ordered unique set of `next` properties\n  - A. starting with this `LinkedFuncList` instance,\n  - B. continuing with all `LinkedFuncList` instances linked via `next`, and\n  - C. terminating before any `next` whose value is\n    - i. `null`, or\n    - j.  this (starting) `LinkedFuncList` instance.\n\n### 4. `chainCall`\n\n- a. is an `asynchronous function` that accepts any `start` argument,\n- b. returns a `Promise` corresponding to the ordered set of _chained_ calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where\n  - A. the starting function recieves the `start` argument\n  - B. each function called in the `Promise` recieves the result of the previous function in the chain\n  - C. the functions are called with their `this` values set to this `LinkedFuncList` instance (the initiator of the traversal\n  - D. errors thrown in the functions cause the `Promise` to reject\n  - E. the order of the calls to the functions corresponds to the order of iteration produced by `this[Symbol.iterator]` even if the functions are asynchronous\n  - F. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it\n\n### 5. `callAll`\n\n- a. is an `asynchronous function` that accepts any `start` argument,\n- b. returns a `Promise` corresponding to the ordered set of calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where\n - A. all functions recieve the `start` argument\n - B. the functions are called with their `this` values set to this `LinkedFuncList` instance (the initiator of the traversal\n - C. errors thrown in the functions cause the `Promise` to reject\n - D. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it\n\n### 6. `link`\n\n- a. is a `function` that accepts any number of arguments\n- b. substitutes passthrough functions for arguments that are not\n  - `function` objects, or\n  - `LinkedFuncList` instances\n- c. creates a chained list of `LinkedFuncList` instances where\n  - A. the first element in the chain is this instance (the caller)\n  - B. the order of the elements in the chain correspond to the order of arguments supplied to the `link` function\n  - C. `function`-valued arguments are replaced with new `LinkedFuncList` instances whose `func` properties correspond to the argument being replaced\n\n### 7. `length`\n\n- a. is a `number`  always greater than 0\n- b. reveals the number of `LinkedFuncList` instances in this list, including this current instance\n",
     "static": true,
     "access": "public"
   },

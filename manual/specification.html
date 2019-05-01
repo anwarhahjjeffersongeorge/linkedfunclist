@@ -39,6 +39,7 @@
 <li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#4---code-chaincall--code-" data-ice="link">4. chainCall</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#5---code-callall--code-" data-ice="link">5. callAll</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#6---code-link--code-" data-ice="link">6. link</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/specification.html"><a href="manual/specification.html#7---code-length--code-" data-ice="link">7. length</a></li>
 </ul>
   </div>
 <div data-ice="manual">
@@ -95,7 +96,7 @@
 </ul>
 <h3 id="5---code-callall--code-">5. <code>callAll</code></h3><ul>
 <li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument,</li>
-<li>b. returns a <code>Promise</code> corresponding to the ordered set of <em>simultaneous</em> calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>
+<li>b. returns a <code>Promise</code> corresponding to the ordered set of calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>
 <li>A. all functions recieve the <code>start</code> argument</li>
 <li>B. the functions are called with their <code>this</code> values set to this <code>LinkedFuncList</code> instance (the initiator of the traversal</li>
 <li>C. errors thrown in the functions cause the <code>Promise</code> to reject</li>
@@ -116,6 +117,10 @@
 <li>C. <code>function</code>-valued arguments are replaced with new <code>LinkedFuncList</code> instances whose <code>func</code> properties correspond to the argument being replaced</li>
 </ul>
 </li>
+</ul>
+<h3 id="7---code-length--code-">7. <code>length</code></h3><ul>
+<li>a. is a <code>number</code>  always greater than 0</li>
+<li>b. reveals the number of <code>LinkedFuncList</code> instances in this list, including this current instance</li>
 </ul>
 </div>
 </div>
