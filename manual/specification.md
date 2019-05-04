@@ -35,7 +35,7 @@ This module exports a single class, `LinkedFuncList`.
   - D. errors thrown in the functions cause the `Promise` to reject
   - E. the order of the calls to the functions corresponds to the order of iteration produced by `this[Symbol.iterator]` even if the functions are asynchronous
   - F. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it
-- c. if the `end` argument is a Promise, it is called at the end of the chain's execution.
+- c. if the `end` argument is a `function`, it is called at the end of the chain's execution with the chain's result
 
 ### 5. `callAll`
 

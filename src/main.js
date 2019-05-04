@@ -7,9 +7,9 @@ class LinkedFuncList {
    * Create a new LinkedFuncList instance.
    */
   constructor () {
-    /** @ignore */
+    /** @private  */
     this._func = null
-    /** @ignore */
+    /** @private  */
     this._next = null
   }
 
@@ -69,9 +69,10 @@ class LinkedFuncList {
    * through nodes' functions until done.
    *
    * @param {object} [start] - any start value
+   * @param {?Function} [end] - called at end with mutated start value if a `Function`, ignored otherwise
    * @return {Promise} resolves to single value or Error
    */
-  async chainCall (start) {
+  async chainCall (start, end) {
     const iterator = this[Symbol.iterator]()
     let promise = new Promise(async (resolve, reject) => {
       let loop = {
@@ -92,7 +93,8 @@ class LinkedFuncList {
           loop.i++
         }
       }
-      resolve(loop.payload)
+      const payload = (typeof end === 'function') ? end(loop.payload) : loop.payload
+      resolve(payload)
     })
     return promise
   }

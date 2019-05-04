@@ -10,7 +10,7 @@ test(`4.a "chainCall"`, t => {
   // t.is(testlist.chainCall.length, 1, 'has unit length')
 })
 
-for (let end of [null, Promise.resolve(endPromiseValue)]) {
+for (let end of [null, (r) => r + endPromiseValue]) {
   const endTestTitle = (end) ? '4.c end › ' :  ''
   const endExpected = expected => (end) ? expected + endPromiseValue : expected
 
