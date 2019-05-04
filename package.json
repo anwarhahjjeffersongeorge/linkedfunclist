@@ -10,8 +10,8 @@
     "doc": "esdoc",
     "pretest": "clear && standard --fix \"./src/index.js\" \"./src/main.js\" ",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=html ava",
-    "pretestw": "clear",
-    "testw": "ava --watch",
+    "prewtest": "clear",
+    "wtest": "ava --watch",
     "coverage": "codecov",
     "preversion": "npm test && npm run doc",
     "postversion": "git push"
