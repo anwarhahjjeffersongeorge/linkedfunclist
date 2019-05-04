@@ -105,7 +105,7 @@
 </ul>
 </li>
 </ul><h3>4. <code>chainCall</code></h3><ul>
-<li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument,</li>
+<li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument, any <code>end</code> argument</li>
 <li>b. returns a <code>Promise</code> corresponding to the ordered set of <em>chained</em> calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>
 <li>A. the starting function recieves the <code>start</code> argument</li>
 <li>B. each function called in the <code>Promise</code> recieves the result of the previous function in the chain</li>
@@ -115,6 +115,7 @@
 <li>F. any <code>func</code> properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it</li>
 </ul>
 </li>
+<li>c. if the <code>end</code> argument is a <code>function</code>, it is called at the end of the chain&apos;s execution with the chain&apos;s result</li>
 </ul><h3>5. <code>callAll</code></h3><ul>
 <li>a. is an <code>asynchronous function</code> that accepts any <code>start</code> argument,</li>
 <li>b. returns a <code>Promise</code> corresponding to the ordered set of calls to unique <code>func</code> properties of the <code>next</code> properties of the <code>LinkedFuncList</code> where<ul>

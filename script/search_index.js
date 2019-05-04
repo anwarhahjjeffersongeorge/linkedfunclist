@@ -306,6 +306,18 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/main.js~linkedfunclist#_func",
+    "class/src/main.js~LinkedFuncList.html#instance-member-_func",
+    "src/main.js~LinkedFuncList#_func",
+    "member"
+  ],
+  [
+    "src/main.js~linkedfunclist#_next",
+    "class/src/main.js~LinkedFuncList.html#instance-member-_next",
+    "src/main.js~LinkedFuncList#_next",
+    "member"
+  ],
+  [
     "src/main.js~linkedfunclist#callall",
     "class/src/main.js~LinkedFuncList.html#instance-method-callAll",
     "src/main.js~LinkedFuncList#callAll",
