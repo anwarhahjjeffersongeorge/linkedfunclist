@@ -27,7 +27,7 @@ This module exports a single class, `LinkedFuncList`.
 
 ### 4. `chainCall`
 
-- a. is an `asynchronous function` that accepts any `start` argument,
+- a. is an `asynchronous function` that accepts any `start` argument, any `end` argument
 - b. returns a `Promise` corresponding to the ordered set of _chained_ calls to unique `func` properties of the `next` properties of the `LinkedFuncList` where
   - A. the starting function recieves the `start` argument
   - B. each function called in the `Promise` recieves the result of the previous function in the chain
@@ -35,6 +35,7 @@ This module exports a single class, `LinkedFuncList`.
   - D. errors thrown in the functions cause the `Promise` to reject
   - E. the order of the calls to the functions corresponds to the order of iteration produced by `this[Symbol.iterator]` even if the functions are asynchronous
   - F. any `func` properties having non-function values will be replaced with a passthrough function that preserves the recieved value supplied to it
+- c. if the `end` argument is a Promise, it is called at the end of the chain's execution.
 
 ### 5. `callAll`
 

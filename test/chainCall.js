@@ -3,12 +3,21 @@ import { LinkedFuncList } from '../src/index.js'
 
 const endPromiseValue = '####a3y'
 
-for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
-  const endPromiseTestTitle = (endPromise) ? '4.c endPromise › ' :  ''
-  const endPromiseExpected = expected => (endPromise) ? expected + endPromiseValue : expected
+/** @test {LinkedFuncList#chainCall} */
+test(`4.a "chainCall"`, t => {
+  const testlist0 = new LinkedFuncList()
+  t.is(typeof testlist0.chainCall, 'function', 'is a function')
+  // t.is(testlist.chainCall.length, 1, 'has unit length')
+})
+
+for (let end of [null, Promise.resolve(endPromiseValue)]) {
+  const endTestTitle = (end) ? '4.c end › ' :  ''
+  const endExpected = expected => (end) ? expected + endPromiseValue : expected
+
   let testlist, testlist2, testlist3, testlist4, testlist5, testlist6, testlist7
   let testfunc
   let baddata
+
 
   test.beforeEach(t => {
     testlist = new LinkedFuncList()
@@ -26,13 +35,7 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
   })
 
   /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.a "chainCall"`, t => {
-    t.is(typeof testlist.chainCall, 'function', 'is a function')
-    // t.is(testlist.chainCall.length, 1, 'has unit length')
-  })
-
-  /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.b.A|4.b.B "chainCall"`, t => {
+  test(`${endTestTitle}4.b.A|4.b.B "chainCall"`, t => {
     let tlists = [testlist2, new LinkedFuncList(), new LinkedFuncList(), new LinkedFuncList()]
     let c = 1
     let start = 'sss'
@@ -43,15 +46,15 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
         return `${aa}${c++}`
       }
     }
-    const promise = testlist2.chainCall(start)
+    const promise = testlist2.chainCall(start, end)
 
     return promise.then(result => {
-      t.is(result, start + '1234', `result should begin with starting value and include ordered results of all promise function calls`)
+      t.is(result, endExpected(start + '1234'), `result should begin with starting value and include ordered results of all promise function calls`)
     })
   })
 
   /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.b.C "chainCall"`, t => {
+  test(`${endTestTitle}4.b.C "chainCall"`, t => {
     // t.is(typeof testlist.chainCall, 'function', 'is a function')
     // t.is(testlist.chainCall.length, 1, 'has unit length')
     let tlists = [testlist3, new LinkedFuncList(), new LinkedFuncList(), new LinkedFuncList()]
@@ -65,14 +68,14 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
         return `${aa}${c++}`
       }
     }
-    const promise = testlist3.chainCall(start)
+    const promise = testlist3.chainCall(start, end)
     return promise.then(result => {
-      t.is(result, start + '1234', `result should begin with starting value and include ordered results of all promise function calls`)
+      t.is(result, endExpected(start + '1234'), `result should begin with starting value and include ordered results of all promise function calls`)
     })
   })
 
   /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.b.D "chainCall"`, async t => {
+  test(`${endTestTitle}4.b.D "chainCall"`, async t => {
     // t.is(typeof testlist.chainCall, 'function', 'is a function')
     // t.is(testlist.chainCall.length, 1, 'has unit length')
     let tlists = [testlist4, new LinkedFuncList(), new LinkedFuncList(), new LinkedFuncList()]
@@ -90,12 +93,12 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
         return `${aa}${c++}`
       }
     }
-    const promise = testlist4.chainCall(start)
+    const promise = testlist4.chainCall(start, end)
     await t.throwsAsync(promise, { is: testError })
   })
 
   /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.b.E "chainCall"`, async t => {
+  test(`${endTestTitle}4.b.E "chainCall"`, async t => {
     // t.is(typeof testlist.chainCall, 'function', 'is a function')
     // t.is(testlist.chainCall.length, 1, 'has unit length')
     let tlists = [testlist5, new LinkedFuncList(), new LinkedFuncList(), new LinkedFuncList()]
@@ -108,14 +111,14 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
         return new Promise((resolve) => setTimeout(() => resolve(`${aa}${c++}`), 111 / c))
       }
     }
-    const promise = testlist5.chainCall(start)
+    const promise = testlist5.chainCall(start, end)
     return promise.then(result => {
-      t.is(result, start + '1234', `result should begin with starting value and include ordered results of all promise async function calls`)
+      t.is(result, endExpected(start + '1234'), `result should begin with starting value and include ordered results of all promise async function calls`)
     })
   })
 
   /** @test {LinkedFuncList#chainCall} */
-  test(`${endPromiseTestTitle}4.b.F "chainCall"`, async t => {
+  test(`${endTestTitle}4.b.F "chainCall"`, async t => {
     // t.is(typeof testlist.chainCall, 'function', 'is a function')
     // t.is(testlist.chainCall.length, 1, 'has unit length')
     let tlists = [testlist6, new LinkedFuncList(), new LinkedFuncList(), new LinkedFuncList()]
@@ -129,9 +132,9 @@ for (let endPromise of [null, Promise.resolve(endPromiseValue)]) {
         }
       }
     }
-    const promise = testlist6.chainCall(start)
+    const promise = testlist6.chainCall(start, end)
     return promise.then(result => {
-      t.is(result, start + '13', `result should begin with starting value and include ordered results of all calls while skipping null funcs`)
+      t.is(result, endExpected(start + '13'), `result should begin with starting value and include ordered results of all calls while skipping null funcs`)
     })
   })
 
